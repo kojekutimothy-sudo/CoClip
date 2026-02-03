@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>CoClip</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="icon"type="image/png" sizes = "32x32" href="Favicon.jpg"/>
+    <link rel="icon" href="Favicon.ico">
+
+    <style>
+
+        @font-face {
+        font-family : Coolvetica;
+        src : url('Fonts/Coolvetica.otf') format('opentype');
+        font-weight : normal;
+        font-style : normal;
+        }
+
+        body {
+            margin : 0;
+            font-family : 'Coolvetica', Arial, sans-serif;
+            color : rgb(51, 50, 50);
+
+            background-image: url('Background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .logo-container {
+            margin-top : 30px;
+            text-align : center;
+        }
+
+        .menu {
+            position : fixed;
+            top : 15px;
+            left : 15px;
+            z-index : 20;
+        }
+
+        .side-menu {
+            position : fixed;
+            top : 0;
+            left : 0;
+            transform : translateX(-260px);
+            width : 250px;
+            height : 100vh;
+            background : #f8f8f8;
+            box-shadow : 6px 0 25px rgba(0,0,0,0.15);
+            padding-top : 60px;
+            transition : transform 0.35s cubic-bezier(.22,.61,.36,1);
+            z-index : 15;
+            will-change : transform;
+        }
+
+        .side-menu a {
+            display : flex;
+            align-items: center;
+            padding: 18px 30px;
+            color : #222;
+            text-decoration: none;
+            font-size : 18px;
+            transition : background 0.25s ease, padding-left 0.25s;
+            opacity : 0;
+            transform : translateX(-10px);
+            will-change : transform, opacity;
+        }
+
+        .side-menu a:hover {
+            background : rgba(0,0,0,0.06);
+            padding-left : 36px
+        }
+
+        .side-menu.open {
+            transform : translateX(0);
+        }
+
+        .overlay {
+            position : fixed;
+            inset : 0;
+            backdrop-filter: none;
+            background : rgba(0,0,0,0.25);
+            display : none;
+            z-index : 10;
+            will-change : backdrop-filter, opacity;
+        }
+
+        .side-menu.open a {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .menu-button {
+            background : none;
+            border : none;
+            padding : 0;
+            cursor : pointer;
+        }
+
+        .menu-button:hover img {
+            transform: scale(1.08);
+        }
+
+        .menu-button img {
+            width : 32px;
+            height : auto;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-header {
+            padding: 0 30px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            color: #777;
+        }
+
+        .menu.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .product-grid {
+            width: 100%;
+            max-width: 1200px;
+            margin: 120px auto 0;
+
+            display: grid;
+            grid-template-columns : repeat(2, 1fr);
+            gap: 120px;
+
+            place-items: center;
+        }
+
+        .product-card {
+            height : 340px;
+
+            background : rgba(255,255,255,0.55);
+            backdrop-filter : blur(8px);
+            border : 1px solid rgba(255,255,255,0.4);
+
+            cursor: pointer;
+            display : flex;
+            align-items : center;
+            justify-content: center;
+
+            color : #222;
+            font-size : 18px;
+
+            transition : transform 0.45s cubic-bezier(.22,.61,.36,1), background 0.45s ease,
+        }
+
+        .product-card:hover {
+            transform : scale(1.04);
+            background : rgba(255,255,255,0.75);
+        }
+
+        .product-image {
+            width : 100%;
+            max-width : 480px;
+            height : auto;
+
+            transition : transform 0.6s cubic-bezier(.22,.61,.36,1);
+            cursor : pointer;
+            will-change: transform
+        }
+
+        .product-image:hover {
+            transform : scale(1.06) translateY(-6px);
+        }
+
+        .slogan {
+            margin-top: 10px;
+            text-align: center;
+
+            font: 600 'Coolvetica', Arial, sans-serif;
+            font-size: 36px;
+            letter-spacing: 0px;
+            text-transform: none;
+
+            color: rgb(47, 45, 45);
+            opacity: 0.9;
+
+            animation: fadeUp 1.2s ease-out forwards;
+        }
+
+        @media (max-width: 600px) {
+            .slogan {
+                font-size: 24px;
+                letter-spacing: 3px;
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="Logo.png" class="logo" style="width:200px">
+        <div class="slogan">Cohesion by Design.</div>
+    </div>
+
+    <div class="product-grid">
+        <img src="Design1.png" class="product-image" style = "max-width:400px">
+        <img src="Design2.png" class="product-image" style = "max-width:200px">
+    </div>
+
+    <div class ="menu">
+        <button class = "menu-button" id="menuBtn">
+            <img src="MenuIcon.png" alt="Menu" style="width:20px">
+        </button>
+    </div>
+
+    <div class="side-menu" id ="sideMenu">
+        <div class="menu-header">coclip</div>
+        <a href="index.html">Home</a>
+        <a href="about.html">Who Are We?</a>
+        <a href="ethos.html">Our Mission</a>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        const btn = document.getElementById('menuBtn');
+        const menu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+        const menuWrapper = document.querySelector('.menu');
+
+        btn.onclick = () => {
+            menu.classList.add('open');
+            overlay.classList.add('show');
+            menuWrapper.classList.add('hidden');
+        };
+
+        overlay.onclick = () => {
+            menu.classList.remove('open');
+            overlay.classList.remove('show');
+            menuWrapper.classList.remove('hidden');
+        };
+    </script>
+</body>
+
+
+</html>
